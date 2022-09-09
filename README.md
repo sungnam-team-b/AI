@@ -1,1 +1,1 @@
-# Sungnam-AI
+# AI
