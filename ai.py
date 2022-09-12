@@ -2,7 +2,8 @@ from keras.models import load_model
 from PIL import Image, ImageOps
 import numpy as np
 
-with open("./model/labels.txt", "r", encoding="utf8") as ins:
+# make a great list
+with open("./model/number.txt", "r", encoding="utf8") as ins:
     great_list = []
     for line in ins:
         great_list.append(line.rstrip('\n'))
@@ -40,15 +41,21 @@ print(prediction)
 #     a=prediction[0,i]
 #     print(a)
 
-# print(great_list)
+print(great_list)
 
-# great_dic = {string:j for j, string in great_list}
+great_dic = {string:0 for string in great_list}
 
-# print(great_dic[0])
+# for i in range(0,9):
+#     great_dic.update(i=prediction[0,i]
 
-# x=prediction[0,1]
-# y=prediction[0,0]
-# if(x>y):
-#     print(True)
-# else:
-#     print(False)
+for i in range(0,10):
+    great_dic[str(i)] = prediction[0,i]
+
+print(great_dic)
+
+great_dic = sorted(great_dic.items(), key=lambda x: x[1], reverse=True)
+
+
+print(great_dic)
+
+print(type(great_dic))
