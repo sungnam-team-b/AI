@@ -2,11 +2,10 @@ from keras.models import load_model
 from PIL import Image, ImageOps
 import numpy as np
 
-# make a great list
-with open("./model/number.txt", "r", encoding="utf8") as ins:
-    great_list = []
-    for line in ins:
-        great_list.append(line.rstrip('\n'))
+list1 = []
+list2 = []
+rank = []
+k=0
 
 # Load the model
 model = load_model('./model/keras_model.h5')
@@ -33,29 +32,25 @@ data[0] = normalized_image_array
 prediction = model.predict(data)
 print(prediction)
 
-# for x in range(0, 9):
-#     if(great[ind[x]] == randword):
-#         result[class_names[ind[x]]] = round(pred[ind[x]]*100, 2)
+for i in range(0,len(prediction[0])):
+    list1.append(prediction[0,i])
+    list2.append(prediction[0,i])
 
-# for i in range(0, 3):
-#     a=prediction[0,i]
-#     print(a)
+list2.sort(reverse=True)
+list2 = list2[0:3]
+for i in range(1,len(prediction[0])):
+    if(list1[i]==list2[0]):
+        rank.append(i)
+for i in range(1,len(prediction[0])):
+    if(list1[i]==list2[1]):
+        rank.append(i)
+for i in range(1,len(prediction[0])):
+    if(list1[i]==list2[2]):
+        rank.append(i)
 
-print(great_list)
+great_dic = { name:value for name, value in zip(rank, list2) }
 
-great_dic = {string:0 for string in great_list}
-
-# for i in range(0,9):
-#     great_dic.update(i=prediction[0,i]
-
-for i in range(0,10):
-    great_dic[str(i)] = prediction[0,i]
-
+print(list1)
+print(list2)
+print(rank)
 print(great_dic)
-
-great_dic = sorted(great_dic.items(), key=lambda x: x[1], reverse=True)
-
-
-print(great_dic)
-
-print(type(great_dic))
